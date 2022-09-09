@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import List
 
 from aiogoogle import Aiogoogle
 from app.core.db import get_async_session
