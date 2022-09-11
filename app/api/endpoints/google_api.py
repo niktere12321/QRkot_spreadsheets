@@ -5,7 +5,7 @@ from app.core.db import get_async_session
 from app.core.google_client import get_service
 from app.core.user import current_superuser
 from app.crud.charity_project import charity_project_crud
-from app.schemas import GoogleApiSchema
+from app.schemas import CharityProjectDBSchema
 from app.services import (set_user_permissions, spreadsheets_create,
                           spreadsheets_update_value)
 from fastapi import APIRouter, Depends
@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.post(
     '/',
-    response_model=List[GoogleApiSchema],
+    response_model=List[CharityProjectDBSchema],
     dependencies=[Depends(current_superuser)],
 )
 async def get_report(

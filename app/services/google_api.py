@@ -1,8 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import List
 
 from aiogoogle import Aiogoogle
 from app.core.config import settings
+from app.models import CharityProject
 
 FORMAT = '%Y/%m/%d %H:%M:%S'
 
@@ -53,7 +54,7 @@ async def set_user_permissions(
 
 async def spreadsheets_update_value(
     spreadsheetid: str,
-    projects: List,
+    projects: List[CharityProject],
     wrapper_services: Aiogoogle
 ) -> None:
 
@@ -66,9 +67,9 @@ async def spreadsheets_update_value(
     ]
     for project in projects:
         new_row = [
-            str(project['name']),
-            str(timedelta(project['completion'])),
-            str(project['description'])
+            str(project.name),
+            str(project.close_date - project.create_date),
+            str(project.description)
         ]
         table_values.append(new_row)
 

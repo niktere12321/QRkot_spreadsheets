@@ -4,5 +4,4 @@ from .charity_project import CharityProjectUpdateSchema  # noqa
 from .donation import AllDonationsDBSchema  # noqa
 from .donation import DonationCreateSchema  # noqa
 from .donation import DonationDBSchema  # noqa
-from .google_api import GoogleApiSchema  # noqa
 from .user import UserCreate, UserRead, UserUpdate  # noqa

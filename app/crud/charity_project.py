@@ -1,8 +1,9 @@
-from typing import Dict, List, Union
+from typing import List
 
 from app.crud.base import BaseCRUD
 from app.models.charity_project import CharityProject
-from sqlalchemy import func, select, true
+from sqlalchemy import func, select
+from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -23,22 +24,16 @@ class CRUDCharityProject(BaseCRUD):
     async def get_projects_by_completion_rate(
         self,
         session: AsyncSession,
-    ) -> List[Dict[str, Union[float, str]]]:
-        projects = await session.execute(
-            select(
-                [
-                    CharityProject.name,
-                    (
-                        func.julianday(CharityProject.close_date) -
-                        func.julianday(CharityProject.create_date)
-                    ).label('completion'),
-                    CharityProject.description
-                ]
-            ).where(
-                CharityProject.fully_invested == true()
-            ).order_by('completion')
+    ) -> List[CharityProject]:
+        projects: Result = await session.execute(
+            select(CharityProject).where(
+                CharityProject.fully_invested
+            ).order_by(
+                func.julianday(CharityProject.close_date) -
+                func.julianday(CharityProject.create_date)
+            )
         )
-        projects = projects.all()
+        projects = projects.scalars().all()
         return projects
 
 
