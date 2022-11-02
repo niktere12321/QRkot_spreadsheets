@@ -69,4 +69,4 @@ uvicorn app.main:app --reload
 ```
 
 ### Автор
-Nikita Terekhov
+Терехов Никита Алексеевич
